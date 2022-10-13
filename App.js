@@ -12,7 +12,12 @@ import IconButton from './src/components/UI/IconButton';
 import {Provider, useDispatch} from 'react-redux';
 import {store} from './src/store/redux/store';
 import {fetchExpense} from './src/utils/http';
-import {storeAllExpenses, expensesLoadingOn, expensesLoadingOff, setExpensesError} from './src/store/redux/expensesSlice';
+import {
+  storeAllExpenses,
+  expensesLoadingOn,
+  expensesLoadingOff,
+  setExpensesError,
+} from './src/store/redux/expensesSlice';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,10 +27,10 @@ const ExpensiveOverView = () => {
 
   const getAllExpenses = async () => {
     dispatch(expensesLoadingOn());
-    try{
+    try {
       const getAllExpenses = await fetchExpense();
       dispatch(storeAllExpenses({expenses: getAllExpenses}));
-    } catch(err) {
+    } catch (err) {
       dispatch(setExpensesError({message: 'Error fetching expenses'}));
     }
     stopLoading();
@@ -35,7 +40,7 @@ const ExpensiveOverView = () => {
     setTimeout(() => {
       dispatch(expensesLoadingOff());
     }, 600);
-  }
+  };
 
   useEffect(() => {
     getAllExpenses();
